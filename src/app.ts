@@ -14,6 +14,10 @@ import {
 const app = express();
 
 app.use(cors());
+app.use(
+  "/api/orders/webhook/paystack",
+  express.raw({ type: "application/json" }),
+);
 app.use(express.json());
 
 app.use(generalLimiter);

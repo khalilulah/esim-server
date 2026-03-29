@@ -49,17 +49,22 @@ export const verifyPayment = async (
 export const paystackWebhook = async (req: Request, res: Response) => {
   try {
     const signature = req.headers["x-paystack-signature"] as string;
-    const isValid = orderService.verifyWebhookSignature(
-      JSON.stringify(req.body),
-      signature,
-    );
+
+    // req.body is a Buffer when using express.raw()
+    const rawBody =
+      req.body instanceof Buffer
+        ? req.body.toString()
+        : JSON.stringify(req.body);
+
+    const isValid = orderService.verifyWebhookSignature(rawBody, signature);
 
     if (!isValid) {
       res.status(400).json({ message: "Invalid signature" });
       return;
     }
 
-    const { event, data } = req.body;
+    const payload = JSON.parse(rawBody);
+    const { event, data } = payload;
 
     if (event === "charge.success") {
       await orderService.confirmOrderPayment(data.reference);
@@ -67,7 +72,7 @@ export const paystackWebhook = async (req: Request, res: Response) => {
 
     res.sendStatus(200);
   } catch {
-    res.sendStatus(200); // always return 200 to Paystack even if something fails
+    res.sendStatus(200);
   }
 };
 
