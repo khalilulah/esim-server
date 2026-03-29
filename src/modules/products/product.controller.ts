@@ -3,12 +3,20 @@ import * as productService from "./product.service";
 import { sendSuccess } from "../../shared/utils/apiResponse";
 
 export const getAll = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const products = await productService.getAllProducts();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 12;
+    const category = req.query.category as string | undefined;
+
+    const products = await productService.getAllProducts({
+      page,
+      limit,
+      category,
+    });
     sendSuccess(res, products);
   } catch (err) {
     next(err);
