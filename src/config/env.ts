@@ -18,4 +18,5 @@ export const env = {
   CLOUDINARY_API_KEY: requireEnv("CLOUDINARY_API_KEY"),
   CLOUDINARY_API_SECRET: requireEnv("CLOUDINARY_API_SECRET"),
   PAYSTACK_SECRET_KEY: requireEnv("PAYSTACK_SECRET_KEY"),
+  SERVER_URL: process.env.SERVER_URL ?? "http://localhost:5000",
 };

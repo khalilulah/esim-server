@@ -115,3 +115,17 @@ export const updateStatus = async (
     next(err);
   }
 };
+
+export const remove = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params as { id: string };
+    await orderService.deleteOrder(id);
+    sendSuccess(res, null, "Order deleted");
+  } catch (err) {
+    next(err);
+  }
+};

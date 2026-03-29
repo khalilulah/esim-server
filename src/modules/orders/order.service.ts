@@ -46,6 +46,11 @@ export const createOrder = async (
   return order;
 };
 
+export const deleteOrder = async (id: string) => {
+  const order = await Order.findByIdAndDelete(id);
+  if (!order) throw new AppError("Order not found", 404);
+};
+
 export const verifyPaystackPayment = async (reference: string) => {
   const response = await axios.get(
     `https://api.paystack.co/transaction/verify/${reference}`,

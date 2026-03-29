@@ -57,5 +57,6 @@ router.patch(
   validate(updateStatusSchema),
   orderController.updateStatus,
 );
+router.delete("/:id", protect, adminOnly, orderController.remove);
 
 export default router;
