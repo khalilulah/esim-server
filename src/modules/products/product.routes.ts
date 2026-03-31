@@ -12,7 +12,6 @@ const productSchema = z.object({
   name: z.string().min(1),
   category: z.string().min(1),
   price: z.number().positive(),
-  images: z.array(z.string()).min(1),
   description: z.string().optional(),
   ingredients: z.array(z.string()).optional(),
   howToUse: z.string().optional(),
@@ -28,14 +27,14 @@ router.post(
   "/",
   protect,
   adminOnly,
-  upload.array("images", 2),
+  upload.array("images", 4),
   productController.create,
 );
 router.put(
   "/:id",
   protect,
   adminOnly,
-  upload.array("images", 2),
+  upload.array("images", 4),
   productController.update,
 );
 router.delete("/:id", protect, adminOnly, productController.remove);
