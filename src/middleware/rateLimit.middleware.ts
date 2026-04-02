@@ -3,7 +3,7 @@ import rateLimit from "express-rate-limit";
 // General API limit — applies to all routes
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 500, // 100 requests per 15 minutes per IP
+  max: 10000, // 100 requests per 15 minutes per IP
   message: {
     success: false,
     message: "Too many requests, please try again later.",
