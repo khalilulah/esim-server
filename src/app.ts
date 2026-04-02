@@ -24,8 +24,8 @@ app.use(generalLimiter);
 
 // Routes
 app.use("/api/auth", authLimiter, authRoutes);
-app.use("/api/products", orderLimiter, productRoutes);
-app.use("/api/orders", orderRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderLimiter, orderRoutes);
 
 // Health check
 app.get("/api/health", (_req, res) => {
